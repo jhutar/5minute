@@ -8,15 +8,18 @@ import re
 import termios
 import fcntl
 import subprocess
-import urllib.request, urllib.error, urllib.parse
 import random
 import time
 import math
 import traceback
-import urllib.request, urllib.parse, urllib.error
 from prettytable import PrettyTable
 from datetime import datetime
 import socket
+
+try:
+    from urllib import request
+except ImportError:
+    from urllib3 import request
 
 try:
     from keystoneclient.v2_0 import client as keystone_client
@@ -344,7 +347,7 @@ class BaseClass(object):
     def __get_scenario(self, filename):
         xml = None
         try:
-            xml = urllib.request.urlopen('https://example.com/scenarios/%s' % filename).read()
+            xml = request.urlopen('https://example.com/scenarios/%s' % filename).read()
         except:
             warning("Profile '%s' doesn't exist." % filename)
             return dict()
@@ -1062,7 +1065,7 @@ class BootInstanceClass(ServerClass):
             progress(title='Loading the userdata script:')
             self.params['cscript'] = "#!/bin/bash\n"
             for filename in filenames.split():
-                cscript = urllib.request.urlopen(filename).read()
+                cscript = request.urlopen(filename).read()
                 cscript = re.sub(r'^#!/bin/bash', '', cscript, flags=re.M)
                 self.params['cscript'] += cscript.format(**self.variables)
                 self.params['cscript'] += "\n"
