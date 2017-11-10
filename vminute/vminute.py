@@ -1505,6 +1505,3 @@ def main(argv):
         if len(argv) > 0:
             scmd = argv.pop(0)
         ScenarioClass.getInstance(scmd).cmd(argv)
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
