@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf8 -*-
-
 import getopt
 import os
 import sys
